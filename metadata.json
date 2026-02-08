@@ -1,0 +1,5 @@
+{
+  "name": "Moteur Morphologique Arabe Static",
+  "description": "A standalone vanilla JS web interface for the Arabic morphological engine using BST and Hash Tables via Pyodide.",
+  "requestFramePermissions": []
+}
