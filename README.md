@@ -1,40 +1,67 @@
+# 🧠 Moteur Morphologique Arabe (Vocalized)
 
-# Moteur Morphologique Arabe (Vocalized)
+Ce projet est un **moteur morphologique haute performance** pour la
+langue arabe, utilisant des **arbres binaires de recherche (BST)** et un
+**cache O(1)** basé sur un index inversé.
 
-Ce projet est un moteur morphologique pour la langue arabe, utilisant des arbres binaires de recherche (BST) et des tables de hachage.
+------------------------------------------------------------------------
 
-## 🚀 Comment lancer la version Web (Preview)
+## 🚀 Lancer la version Web (Preview)
 
-1. **Installer Node.js** : Téléchargez-le sur [nodejs.org](https://nodejs.org/).
-2. **Ouvrir un terminal** (Utilisez **CMD** de préférence sur Windows pour éviter les erreurs de droits).
-3. **Installer les dépendances** :
-   ```bash
-   npm install
-   ```
-4. **Lancer le serveur** :
-   ```bash
-   npm run dev
-   ```
-5. **Ouvrir le navigateur** : Allez sur `http://localhost:5173`.
+### 1️⃣ Installer Node.js
 
----
+Téléchargez-le sur : https://nodejs.org/
 
-## 🛠 Résolution des problèmes (Windows)
+### 2️⃣ Ouvrir un terminal
 
-### Erreur "Execution of scripts is disabled" (npm.ps1)
-Si vous voyez cette erreur dans PowerShell :
-1. Ouvrez PowerShell en **Administrateur**.
-2. Exécutez : `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`
-3. Validez avec `Y`.
+Sur Windows, utilisez **CMD** pour éviter les erreurs de permissions.
 
-### Utilisation de Python (Terminal seulement)
-Si vous voulez juste utiliser la version terminal noire :
-```bash
+### 3️⃣ Installer les dépendances
+
+``` bash
+npm install
+```
+
+### 4️⃣ Lancer le serveur
+
+``` bash
+npm run dev
+```
+
+### 5️⃣ Ouvrir le navigateur
+
+Accédez à :\
+http://localhost:5173
+
+------------------------------------------------------------------------
+
+## 🐍 Version Python (Terminal)
+
+Pour exécuter la version CLI :
+
+``` bash
 python main.py
 ```
 
+------------------------------------------------------------------------
+
+## 🛠 Résolution des problèmes (Windows)
+
+### ❌ Erreur : "Execution of scripts is disabled" (PowerShell)
+
+1.  Ouvrez **PowerShell en tant qu'Administrateur**
+2.  Exécutez la commande suivante :
+
+``` powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+3.  Validez avec `Y` (Yes)
+
+------------------------------------------------------------------------
+
 ## 📂 Structure du projet
-- `logic/` : Moteur de calcul en TypeScript (pour le web).
-- `*.py` : Moteur de calcul en Python (utilisé par Pyodide dans le web ou en CLI).
-- `App.tsx` : Interface utilisateur interactive.
-    
+
+    logic/         → Moteur de calcul en TypeScript (BST + cache O(1))
+    python/        → Moteur de calcul en Python (version CLI)
+    src/App.tsx    → Interface utilisateur interactive (React)
