@@ -245,31 +245,39 @@ const App: React.FC = () => {
   };
 
   const handleValidate = async () => {
-    if (!valWord.trim() || !valRoot.trim()) {
-      showToast('يرجى إدخال الكلمة والجذر', 'error');
-      return;
-    }
+  if (!valWord.trim() || !valRoot.trim()) {
+    showToast('يرجى إدخال الكلمة والجذر', 'error');
+    return;
+  }
+  
+  try {
+    // First, get all schemes from Python
+    const schemesJson = await pyodide.runPython(`json.dumps(ht.get_all())`);
+    const allSchemes = JSON.parse(schemesJson);
     
-    try {
-      const res = await pyodide.runPython(`
-        isValid, scheme = engine.validate("${valWord}", "${valRoot}", ht.get_all(), bst)
-        json.dumps({"isValid": isValid, "scheme": scheme})
-      `);
-      const parsed = JSON.parse(res);
-      setValResult(parsed);
-      
-      if (parsed.isValid) {
-        await syncData(pyodide);
-        showToast(`الكلمة "${valWord}" تنتمي للجذر "${valRoot}"`, 'success');
-      } else {
-        showToast(`الكلمة "${valWord}" لا تنتمي للجذر "${valRoot}"`, 'error');
-      }
-    } catch (error) {
-      console.error('Validation error:', error);
-      showToast('حدث خطأ أثناء التحليل', 'error');
+    console.log("Validating:", valWord, valRoot);
+    console.log("Available schemes:", allSchemes);
+    
+    const res = await pyodide.runPython(`
+      schemes = ${JSON.stringify(allSchemes)}
+      result = engine.validate("${valWord}", "${valRoot}", schemes, bst)
+      json.dumps({"isValid": result[0], "scheme": result[1]})
+    `);
+    
+    const parsed = JSON.parse(res);
+    setValResult(parsed);
+    
+    if (parsed.isValid) {
+      await syncData(pyodide);
+      showToast(`الكلمة "${valWord}" تنتمي للجذر "${valRoot}"`, 'success');
+    } else {
+      showToast(`الكلمة "${valWord}" لا تنتمي للجذر "${valRoot}"`, 'error');
     }
-  };
-
+  } catch (error) {
+    console.error('Validation error:', error);
+    showToast('حدث خطأ أثناء التحليل', 'error');
+  }
+};
   const rootsList = useMemo(() => allRoots, [allRoots]);
 
   const selectedNodeData = useMemo(() => {
